@@ -73,14 +73,32 @@ SMasterNodeData* CHyprMasterLayout::getMasterNodeOnWorkspace(const int& ws) {
 }
 
 void CHyprMasterLayout::onWindowCreatedTiling(PHLWINDOW pWindow, eDirection direction) {
+    std::cout << "1" << std::endl;
     if (pWindow->m_bIsFloating)
         return;
+    std::cout << "2" << std::endl;
 
     static auto PNEWTOP = CConfigValue<Hyprlang::INT>("master:new_on_top");
+    std::cout << "3" << std::endl;
 
     const auto  PMONITOR = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID);
+    std::cout << "4" << std::endl;
 
-    const auto  PNODE = *PNEWTOP ? &m_lMasterNodesData.emplace_front() : &m_lMasterNodesData.emplace_back();
+    const auto* selectedNode = getNodeFromWindow(g_pCompositor->m_pLastWindow.lock());
+    std::cout << "5" << std::endl;
+    /* const auto  PNODE = *PNEWTOP ? &m_lMasterNodesData.emplace_front() : &m_lMasterNodesData.emplace_back(); */
+
+    const auto position = std::find_if(
+        m_lMasterNodesData.begin(),
+        m_lMasterNodesData.end(),
+        [selectedNode](const SMasterNodeData& node) {
+            return &node == selectedNode;
+        }
+    );
+    std::cout << "6" << std::endl;
+
+    const auto PNODE = &(*m_lMasterNodesData.emplace(position));
+    std::cout << PNODE << std::endl;
 
     PNODE->workspaceID = pWindow->workspaceID();
     PNODE->pWindow     = pWindow;
