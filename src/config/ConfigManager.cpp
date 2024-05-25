@@ -431,6 +431,7 @@ CConfigManager::CConfigManager() {
     m_pConfig->addConfigValue("master:new_is_master", Hyprlang::INT{1});
     m_pConfig->addConfigValue("master:always_center_master", Hyprlang::INT{0});
     m_pConfig->addConfigValue("master:new_on_top", Hyprlang::INT{0});
+    m_pConfig->addConfigValue("master:new_above_current", Hyprlang::INT{0});
     m_pConfig->addConfigValue("master:no_gaps_when_only", Hyprlang::INT{0});
     m_pConfig->addConfigValue("master:orientation", {"left"});
     m_pConfig->addConfigValue("master:inherit_fullscreen", Hyprlang::INT{1});
